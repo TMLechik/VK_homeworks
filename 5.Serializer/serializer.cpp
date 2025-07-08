@@ -29,20 +29,6 @@ Error Serializer::process() {
         return Error::NoError;
     }
 
-    // Рекурсивная обработка нескольких полей
-    template <class T, class... Args>
-    Error Serializer::process(const T& value, const Args&... args) {
-        Error err = process(value); // Первый элемент
-
-        // Ошибка - выходим
-        if (err != Error::NoError) {
-            return err;
-        }
-
-        // Остальные аргументы
-        return process(args...);
-    }
-
 
     Deserializer::Deserializer(std::istream& in) : in_(in) {}
 
@@ -88,18 +74,4 @@ Error Serializer::process() {
     // Вариант с пустым списком аргументов для рекурсии
     Error Deserializer::process() {
         return Error::NoError;
-    }
-
-    // Рекурсивная обработка нескольких полей
-    template <class T, class... Args>
-    Error Deserializer::process(T& first, Args&... args) {
-        Error err = process(first); // Первый элемент
-
-        // Ошибка - выходим
-        if (err != Error::NoError) {
-            return err;
-        }
-
-        // Остальные аргументы
-        return process(args...);
     }

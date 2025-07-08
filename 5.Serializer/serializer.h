@@ -32,8 +32,19 @@ class Serializer
     Error process(const uint64_t& value);
     Error process();
 
+    // Рекурсивная обработка нескольких полей
     template <class T, class... Args>
-    Error process(const T& value, const Args&... args);
+    Error process(const T& value, const Args&... args) {
+        Error err = process(value); // Первый элемент
+
+        // Ошибка - выходим
+        if (err != Error::NoError) {
+            return err;
+        }
+
+        // Остальные аргументы
+        return process(args...);
+    }
 
 public:
     explicit Serializer(std::ostream& out);
@@ -59,8 +70,19 @@ class Deserializer
     Error process(uint64_t& value);
     Error process();
 
+    // Рекурсивная обработка нескольких полей
     template <class T, class... Args>
-    Error process(T& first, Args&... args);
+    Error Deserializer::process(T& first, Args&... args) {
+        Error err = process(first); // Первый элемент
+
+        // Ошибка - выходим
+        if (err != Error::NoError) {
+            return err;
+        }
+
+        // Остальные аргументы
+        return process(args...);
+    }
 
 public:
     explicit Deserializer(std::istream& in);
