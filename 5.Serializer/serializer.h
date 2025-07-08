@@ -72,7 +72,7 @@ class Deserializer
 
     // Рекурсивная обработка нескольких полей
     template <class T, class... Args>
-    Error Deserializer::process(T& first, Args&... args) {
+    Error process(T& first, Args&... args) {
         Error err = process(first); // Первый элемент
 
         // Ошибка - выходим
