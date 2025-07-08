@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream> // stringstream
+#include <cstdint> // Для uint64_t
 
 enum class Error
 {
