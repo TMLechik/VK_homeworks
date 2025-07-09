@@ -4,7 +4,7 @@
 #include <sstream> // std::ostringstream
 #include <string> // std::stoul
 #include <tuple>
-#include <utility> // std::index_sequence, std::forward
+#include <utility> // std::forward
 #include <cctype> // std::isdigit
 #include <stdexcept>
 #include <type_traits> // std::is_convertible_v
@@ -23,7 +23,7 @@ void print_arg(std::ostringstream& oss, const Tuple& args) {
 
 template <size_t I = 0, typename Tuple>
 void print_arg_by_index(std::ostringstream& oss, size_t target_idx, const Tuple& args) {
-    if constexpr (I < std::tuple_size_v<Tuple>) {
+    if constexpr (I < std::tuple_size_v<Tuple>) { // else  не компилируется при I< и наоборот
         if (I == target_idx) {
             print_arg<I>(oss, args);
         }
